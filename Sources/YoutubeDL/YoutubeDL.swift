@@ -299,10 +299,9 @@ open class YoutubeDL: NSObject {
             class Pop:
                 def __init__(self, *args, **kwargs):
                     print('Popen.__init__:', self, args)#, kwargs)
-                    if args[0][0] in ['ffmpeg', 'ffprobe']:
+                    if args[0] in ['ffmpeg', 'ffprobe']:
                         self.__args = args
-                    else:
-                        raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), args[0])
+                    raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), args[0])
             
                 def communicate(self, *args, **kwargs):
                     print('Popen.communicate:', self, args, kwargs)
@@ -575,55 +574,21 @@ open class YoutubeDL: NSObject {
         }
     }
    
-//    open func extractInfo(url: URL) async throws -> ([Format], Info) {
-//        let pythonObject: PythonObject
-//        if let _pythonObject = self.pythonObject {
-//            pythonObject = _pythonObject
-//        } else {
-//            pythonObject = try await makePythonObject()
-//        }
-//
-//        print(#function, url)
-//        let info = try pythonObject.extract_info.throwing.dynamicallyCall(withKeywordArguments: ["": url.absoluteString, "download": false, "process": true])
-//        print(info)
-////        print(#function, "throttled:", pythonObject.throttled)
-//        
-//        let format_selector = pythonObject.build_format_selector(options!["format"])
-//        let formats_to_download = format_selector(info)
-//        var formats: [Format] = []
-//        let decoder = PythonDecoder()
-//        for format in formats_to_download {
-//            let format = try decoder.decode(Format.self, from: format)
-//            formats.append(format)
-//        }
-//        
-//        return (formats, try decoder.decode(Info.self, from: info))
-//    }
-    
-    open func extractInfo(url: URL, audioAndVideo: Bool = false) async throws -> ([Format], Info) {
+    open func extractInfo(url: URL) async throws -> ([Format], Info) {
         let pythonObject: PythonObject
         if let _pythonObject = self.pythonObject {
             pythonObject = _pythonObject
         } else {
             pythonObject = try await makePythonObject()
         }
-        options = audioAndVideo ? [
-            "format": "audioandvideo/best[height<?720]",
-            "nocheckcertificate": true,
-            "verbose": true,
-        ] : defaultOptions
-        
-        pythonObject.options = options!
-        
+
         print(#function, url)
         let info = try pythonObject.extract_info.throwing.dynamicallyCall(withKeywordArguments: ["": url.absoluteString, "download": false, "process": true])
         print(info)
-        
-        //        print(#function, "throttled:", pythonObject.throttled)
+//        print(#function, "throttled:", pythonObject.throttled)
         
         let format_selector = pythonObject.build_format_selector(options!["format"])
         let formats_to_download = format_selector(info)
-        
         var formats: [Format] = []
         let decoder = PythonDecoder()
         for format in formats_to_download {
