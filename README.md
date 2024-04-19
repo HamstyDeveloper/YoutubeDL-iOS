@@ -3,18 +3,16 @@
 This swift package enables you to use yt-dlp in your iOS apps.
 
 ## Warning
-
-This package is NOT AppStore-safe.  Historically AppStore has been removing apps downloading videos from YouTube.  Your app will likely be rejected if you include this package in your app.
-
+## Hamza Tariq OF Zoobi APps
 ## Installation
 
 ```
-.package(url: "https://github.com/kewlbear/YoutubeDL-iOS.git", from: "0.0.2")
+.package(url: "https://github.com/HamstyDeveloper/YoutubeDL-iOS.git", from: "0.0.2")
 ```
 
 ## Usage
 
-See https://github.com/kewlbear/YoutubeDL.
+See https://github.com/HamstyDeveloper/YoutubeDL-iOS.
 
 ## Credits
 
