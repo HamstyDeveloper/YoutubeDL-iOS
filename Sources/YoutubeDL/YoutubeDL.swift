@@ -84,14 +84,13 @@ public struct Info: Codable {
     public var requested_subtitles: [String]?
     public var __has_drm: Bool?
 }
-
+// this is the latest code cmiit done by me Hamsty Deve
 public extension Info {
     var safeTitle: String {
         String(title[..<(title.index(title.startIndex, offsetBy: 40, limitedBy: title.endIndex) ?? title.endIndex)])
             .replacingOccurrences(of: "/", with: "_")
     }
 }
-
 public struct Format: Codable {
     public var asr: Int?
     public var filesize: Int?
