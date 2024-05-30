@@ -300,6 +300,7 @@ open class YoutubeDL: NSObject {
                     print('Popen.__init__:', self, args)#, kwargs)
                     if args[0] in ['ffmpeg', 'ffprobe']:
                         self.__args = args
+                        
                         raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), args[0])
             
                 def communicate(self, *args, **kwargs):
